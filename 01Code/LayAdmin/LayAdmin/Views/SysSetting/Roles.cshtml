@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/lib/layui/css/layui.css" media="all">
+    <script src="~/lib/layui/layui.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="searchTable" style="display:none">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">ID</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" id="idData" lay-verify="title" autocomplete="off" placeholder="请输入ID" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" id="usernameData" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">创建日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="date" id="createdateData" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input time">
+                </div>
+            </div>
+            <div class="layui-input-block" style="display:none">
+                <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </form>
+    </div>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+    <script type="text/html" id="toolbarList">
+        <div class="layui-btn-container">
+            <button  title="新增" class="layui-btn layui-btn-sm" lay-event="add">
+                <i class="layui-icon">&#xe654;</i>
+            </button>
+            <button  title="编辑" class="layui-btn layui-btn-sm" lay-event="edit">
+                <i class="layui-icon">&#xe642;</i>
+            </button>
+            <button  title="删除" class="layui-btn layui-btn-sm"  lay-event="delete">
+                <i class="layui-icon">&#xe640;</i>
+            </button>
+            <a title="刷新" class="layui-btn layui-btn-sm" href="javascript:location.replace(location.href);">
+                <i class="layui-icon">&#xe669;</i>
+            </a>
+        </div>
+    </script>
+
+    <script type="text/html" id="rowBar">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+<script>
+    layui.use(['table', 'jquery', 'laydate'], function () {
+    var table = layui.table,
+        $ = layui.jquery,
+     laydate = layui.laydate;
+    laydate.render({
+        elem: '.time' //指定元素
+    });
+  table.render({
+    elem: '#test'
+    ,url:'/SysSetting/GetList'
+      , toolbar: '#toolbarList'
+      //, toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+    , id: 'listReload'  //生成 Layui table 的标识 id，必须提供，用于后文刷新操作
+    , title: '用户数据表'
+      , totalRow: true
+      , page: true //开启分页
+              , limit: 10 //每页条数，默认10条
+              , limits: [10,20,30,40, 50, 100, 200]
+    , cols: [[ //表头
+              { type: 'checkbox', rowspan: 2 ,totalRowText: '合计'}
+              , { align: 'center', title: '操作', colspan: 2 }
+              , { fixed: 'right', title: '操作', toolbar: '#rowBar', width: 150, rowspan: 2 }
+    ],[ //表头
+              { field: 'id', width: 80, title: 'ID', sort: true, totalRow: true }
+              , { field: 'username', width: 80, title: '用户名' }
+              
+      ]]
+  });
+
+  var $ = layui.$, active = {
+      reload: function () {
+          //执行重载
+          table.reload('listReload', {
+              page: {
+                  curr: 1 //重新从第 1 页开始
+              }
+              , url: '/SysSetting/GetList'
+            , where: {
+                //key: {
+                id: $('#idData').val()
+                    , username: $('#usernameData').val()
+                , createdate: $('#createdateData').val()
+                //}
+            }
+          });
+      }
+  };
+
+  $('.demoTable .layui-btn').on('click', function () {
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+  });
+
+  //头工具栏事件
+  table.on('toolbar(test)', function(obj){
+      var checkStatus = table.checkStatus(obj.config.id);
+      
+      switch (obj.event) {
+          case 'add':
+              layer.open({
+                  type: 1
+                  ,title:'查询条件'
+  , offset: 'lt' //具体配置参考：offset参数项
+  , content: $('#searchTable')
+                  //, content: '/PartObjct/FieldPart'
+  , btn: ['查询', '重置']
+  , btnAlign: 'r' //按钮居中
+  , shade: [0.8, '#393D49'] //遮罩
+  , yes: function (index, layero) {
+      active["reload"].call(this);
+      layer.close(index);
+  }, btn2:function (index, layero) {
+      $('#reset').click();
+      return false;
+  }
+              })
+              break;
+          case 'edit':
+              var demoReload = $('#demoReload');
+              layer.alert(demoReload.val());
+              break;
+        case 'getCheckData':
+            var data = checkStatus.data,
+                delList = [];
+            data.forEach(function (n, i) {
+                delList.push(n.id);
+            });
+            $.ajax({
+                url: '/SysSetting/Delete',
+                type:'get',
+                dataType:'json',
+                data: "id=" + delList,
+                success: function (data) {
+                    layer.alert("删除成功");
+                },
+                error: function (data) {
+                    layer.alert("删除失败");
+                }
+            }); 
+      break;
+      case 'getCheckLength':
+        var data = checkStatus.data;
+        layer.msg('选中了：'+ data.length + ' 个');
+      break;
+      case 'isAll':
+        layer.msg(checkStatus.isAll ? '全选': '未全选');
+        break;
+        case 'reload':
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+            break
+    };
+  });
+
+  //监听行工具事件
+  table.on('tool(test)', function(obj){
+    var data = obj.data;
+    //console.log(obj)
+    if(obj.event === 'del'){
+      layer.confirm('真的删除行么', function(index){
+          obj.del();
+        layer.close(index);
+      });
+    } else if(obj.event === 'edit'){
+      layer.prompt({
+        formType: 2
+        ,value: data.email
+      }, function(value, index){
+        obj.update({
+          email: value
+        });
+        layer.close(index);
+      });
+    }
+  });
+});
+    </script>
+
+</body>
+</html>
