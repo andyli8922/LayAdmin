@@ -39,18 +39,21 @@
     <table class="layui-hide" id="test" lay-filter="test"></table>
     <script type="text/html" id="toolbarList">
         <div class="layui-btn-container">
-            <button  title="新增" class="layui-btn layui-btn-sm" lay-event="add">
+            <button title="筛选" class="layui-btn layui-btn-sm" lay-event="Filter">
                 <i class="layui-icon">&#xe654;</i>
-            </button>
-            <button  title="编辑" class="layui-btn layui-btn-sm" lay-event="edit">
-                <i class="layui-icon">&#xe642;</i>
-            </button>
-            <button  title="删除" class="layui-btn layui-btn-sm"  lay-event="delete">
-                <i class="layui-icon">&#xe640;</i>
             </button>
             <a title="刷新" class="layui-btn layui-btn-sm" href="javascript:location.replace(location.href);">
                 <i class="layui-icon">&#xe669;</i>
             </a>
+            <button title="新增" class="layui-btn layui-btn-sm" lay-event="add">
+                <i class="layui-icon">&#xe654;</i>
+            </button>
+            <button title="编辑" class="layui-btn layui-btn-sm" lay-event="edit">
+                <i class="layui-icon">&#xe642;</i>
+            </button>
+            <button title="删除" class="layui-btn layui-btn-sm" lay-event="delete">
+                <i class="layui-icon">&#xe640;</i>
+            </button>
         </div>
     </script>
 
@@ -73,8 +76,8 @@
       //, toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
     , id: 'listReload'  //生成 Layui table 的标识 id，必须提供，用于后文刷新操作
     , title: '用户数据表'
-      , totalRow: true
-      , page: true //开启分页
+    , totalRow: true
+    , page: true //开启分页
               , limit: 10 //每页条数，默认10条
               , limits: [10,20,30,40, 50, 100, 200]
     , cols: [[ //表头
@@ -140,24 +143,11 @@
               var demoReload = $('#demoReload');
               layer.alert(demoReload.val());
               break;
-        case 'getCheckData':
-            var data = checkStatus.data,
-                delList = [];
-            data.forEach(function (n, i) {
-                delList.push(n.id);
+        case 'delete':
+            layer.confirm('真的删除行么', function (index) {
+                obj.del();
+                layer.close(index);
             });
-            $.ajax({
-                url: '/SysSetting/Delete',
-                type:'get',
-                dataType:'json',
-                data: "id=" + delList,
-                success: function (data) {
-                    layer.alert("删除成功");
-                },
-                error: function (data) {
-                    layer.alert("删除失败");
-                }
-            }); 
       break;
       case 'getCheckLength':
         var data = checkStatus.data;
