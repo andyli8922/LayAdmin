@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LayAdminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="coreDevPage">
+          <Key>
+            <PropertyRef Name="pageID" />
+          </Key>
+          <Property Name="pageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pageQueryURL" Type="nvarchar" MaxLength="200" />
+          <Property Name="pageModifyURL" Type="nvarchar" MaxLength="200" />
+          <Property Name="pageTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="pageDataSource" Type="nvarchar" MaxLength="50" />
+          <Property Name="pageModifySource" Type="nvarchar" MaxLength="50" />
+          <Property Name="pageQueryFields" Type="nvarchar" MaxLength="500" />
+          <Property Name="pageWhereExpress" Type="nvarchar" MaxLength="500" />
+          <Property Name="pageEditWhere" Type="nvarchar" MaxLength="200" />
+          <Property Name="pageOrderBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="pageColomns" Type="ntext" />
+          <Property Name="pageSearch" Type="ntext" />
+          <Property Name="pageEdit" Type="ntext" />
+          <Property Name="pageAdd" Type="ntext" />
+          <Property Name="pageDef" Type="ntext" />
+          <Property Name="pageToolBarID" Type="int" />
+          <Property Name="pageRowBarID" Type="int" />
+          <Property Name="pageLimit" Type="int" />
+          <Property Name="pageLimits" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“LayAdmin.dbo.coreDevPageQuery”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="coreDevPageQuery">
+          <Key>
+            <PropertyRef Name="PAGE_ID" />
+            <PropertyRef Name="PAGE_FIELD" />
+          </Key>
+          <Property Name="PAGE_ID" Type="int" Nullable="false" />
+          <Property Name="PAGE_FIELD" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ANA_DESC" Type="nvarchar" MaxLength="100" />
+          <Property Name="ANA_ACTIVE" Type="bit" />
+          <Property Name="ANA_SORT" Type="int" />
+          <Property Name="ANA_CONTROLTYPE" Type="nvarchar" MaxLength="30" />
+          <Property Name="ANA_LENGTH" Type="smallint" />
+          <Property Name="ANA_ISRANGE" Type="bit" />
+          <Property Name="ANA_BEGINDATA" Type="nvarchar" MaxLength="50" />
+          <Property Name="ANA_ENDDATA" Type="nvarchar" MaxLength="50" />
+          <Property Name="ANA_ISMUSTFIELD" Type="bit" />
+          <Property Name="ANA_ISWHERE" Type="int" />
+          <Property Name="ANA_SHOWOP" Type="tinyint" />
+          <Property Name="ANA_TAG" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="coreMenu">
+          <Key>
+            <PropertyRef Name="MenuID" />
+          </Key>
+          <Property Name="MenuID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MenuDesc" Type="nvarchar" MaxLength="50" />
+          <Property Name="MenuHref" Type="nvarchar" MaxLength="200" />
+          <Property Name="MenuIcon" Type="nvarchar" MaxLength="10" />
+          <Property Name="MenuCommand" Type="nvarchar" MaxLength="10" />
+          <Property Name="ParentMenu" Type="nvarchar" MaxLength="20" />
+          <Property Name="Sort" Type="int" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="coreToolBar">
+          <Key>
+            <PropertyRef Name="toolbarID" />
+          </Key>
+          <Property Name="toolbarID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="toolbarName" Type="nvarchar" MaxLength="50" />
+          <Property Name="toolbarContent" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="coreToolBarEvent">
+          <Key>
+            <PropertyRef Name="toolBarID" />
+            <PropertyRef Name="toolBarEvent" />
+          </Key>
+          <Property Name="toolBarID" Type="int" Nullable="false" />
+          <Property Name="toolBarEvent" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EventDataSource" Type="nvarchar" MaxLength="50" />
+          <Property Name="EventJS" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="LayAdminModelStoreContainer">
+          <EntitySet Name="coreDevPage" EntityType="Self.coreDevPage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="coreMenu" EntityType="Self.coreMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="coreToolBar" EntityType="Self.coreToolBar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="coreToolBarEvent" EntityType="Self.coreToolBarEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="coreDevPageQuery" EntityType="Self.coreDevPageQuery" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [coreDevPageQuery].[PAGE_ID] AS [PAGE_ID], 
+    [coreDevPageQuery].[PAGE_FIELD] AS [PAGE_FIELD], 
+    [coreDevPageQuery].[ANA_DESC] AS [ANA_DESC], 
+    [coreDevPageQuery].[ANA_ACTIVE] AS [ANA_ACTIVE], 
+    [coreDevPageQuery].[ANA_SORT] AS [ANA_SORT], 
+    [coreDevPageQuery].[ANA_CONTROLTYPE] AS [ANA_CONTROLTYPE], 
+    [coreDevPageQuery].[ANA_LENGTH] AS [ANA_LENGTH], 
+    [coreDevPageQuery].[ANA_ISRANGE] AS [ANA_ISRANGE], 
+    [coreDevPageQuery].[ANA_BEGINDATA] AS [ANA_BEGINDATA], 
+    [coreDevPageQuery].[ANA_ENDDATA] AS [ANA_ENDDATA], 
+    [coreDevPageQuery].[ANA_ISMUSTFIELD] AS [ANA_ISMUSTFIELD], 
+    [coreDevPageQuery].[ANA_ISWHERE] AS [ANA_ISWHERE], 
+    [coreDevPageQuery].[ANA_SHOWOP] AS [ANA_SHOWOP], 
+    [coreDevPageQuery].[ANA_TAG] AS [ANA_TAG]
+    FROM [dbo].[coreDevPageQuery] AS [coreDevPageQuery]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LayAdminModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LayAdminEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="coreToolBar" EntityType="LayAdminModel.coreToolBar" />
+          <EntitySet Name="coreToolBarEvent" EntityType="LayAdminModel.coreToolBarEvent" />
+          <EntitySet Name="coreDevPage" EntityType="LayAdminModel.coreDevPage" />
+          <EntitySet Name="coreMenu" EntityType="LayAdminModel.coreMenu" />
+          <EntitySet Name="coreDevPageQuery" EntityType="LayAdminModel.coreDevPageQuery" />
+        </EntityContainer>
+        <EntityType Name="coreToolBar">
+          <Key>
+            <PropertyRef Name="toolbarID" />
+          </Key>
+          <Property Name="toolbarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="toolbarName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="toolbarContent" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="coreToolBarEvent">
+          <Key>
+            <PropertyRef Name="toolBarID" />
+            <PropertyRef Name="toolBarEvent" />
+          </Key>
+          <Property Name="toolBarID" Type="Int32" Nullable="false" />
+          <Property Name="toolBarEvent" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EventDataSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EventJS" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="coreDevPage">
+          <Key>
+            <PropertyRef Name="pageID" />
+          </Key>
+          <Property Name="pageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pageQueryURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="pageModifyURL" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="pageTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="pageDataSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pageModifySource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pageQueryFields" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="pageWhereExpress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="pageEditWhere" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="pageOrderBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="pageColomns" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pageSearch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pageEdit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pageAdd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pageDef" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pageToolBarID" Type="Int32" />
+          <Property Name="pageRowBarID" Type="Int32" />
+          <Property Name="pageLimit" Type="Int32" />
+          <Property Name="pageLimits" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="coreMenu">
+          <Key>
+            <PropertyRef Name="MenuID" />
+          </Key>
+          <Property Name="MenuID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MenuDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MenuHref" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MenuIcon" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MenuCommand" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ParentMenu" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Sort" Type="Int32" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="coreDevPageQuery">
+          <Key>
+            <PropertyRef Name="PAGE_ID" />
+            <PropertyRef Name="PAGE_FIELD" />
+          </Key>
+          <Property Name="PAGE_ID" Type="Int32" Nullable="false" />
+          <Property Name="PAGE_FIELD" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ANA_DESC" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ANA_ACTIVE" Type="Boolean" />
+          <Property Name="ANA_SORT" Type="Int32" />
+          <Property Name="ANA_CONTROLTYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ANA_LENGTH" Type="Int16" />
+          <Property Name="ANA_ISRANGE" Type="Boolean" />
+          <Property Name="ANA_BEGINDATA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ANA_ENDDATA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ANA_ISMUSTFIELD" Type="Boolean" />
+          <Property Name="ANA_ISWHERE" Type="Int32" />
+          <Property Name="ANA_SHOWOP" Type="Byte" />
+          <Property Name="ANA_TAG" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LayAdminModelStoreContainer" CdmEntityContainer="LayAdminEntities">
+          <EntitySetMapping Name="coreToolBar">
+            <EntityTypeMapping TypeName="LayAdminModel.coreToolBar">
+              <MappingFragment StoreEntitySet="coreToolBar">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="toolbarContent" ColumnName="toolbarContent" />
+                <ScalarProperty Name="toolbarName" ColumnName="toolbarName" />
+                <ScalarProperty Name="toolbarID" ColumnName="toolbarID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="coreToolBarEvent">
+            <EntityTypeMapping TypeName="LayAdminModel.coreToolBarEvent">
+              <MappingFragment StoreEntitySet="coreToolBarEvent">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="EventJS" ColumnName="EventJS" />
+                <ScalarProperty Name="EventDataSource" ColumnName="EventDataSource" />
+                <ScalarProperty Name="toolBarEvent" ColumnName="toolBarEvent" />
+                <ScalarProperty Name="toolBarID" ColumnName="toolBarID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="coreDevPage">
+            <EntityTypeMapping TypeName="LayAdminModel.coreDevPage">
+              <MappingFragment StoreEntitySet="coreDevPage">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="pageLimits" ColumnName="pageLimits" />
+                <ScalarProperty Name="pageLimit" ColumnName="pageLimit" />
+                <ScalarProperty Name="pageRowBarID" ColumnName="pageRowBarID" />
+                <ScalarProperty Name="pageToolBarID" ColumnName="pageToolBarID" />
+                <ScalarProperty Name="pageDef" ColumnName="pageDef" />
+                <ScalarProperty Name="pageAdd" ColumnName="pageAdd" />
+                <ScalarProperty Name="pageEdit" ColumnName="pageEdit" />
+                <ScalarProperty Name="pageSearch" ColumnName="pageSearch" />
+                <ScalarProperty Name="pageColomns" ColumnName="pageColomns" />
+                <ScalarProperty Name="pageOrderBy" ColumnName="pageOrderBy" />
+                <ScalarProperty Name="pageEditWhere" ColumnName="pageEditWhere" />
+                <ScalarProperty Name="pageWhereExpress" ColumnName="pageWhereExpress" />
+                <ScalarProperty Name="pageQueryFields" ColumnName="pageQueryFields" />
+                <ScalarProperty Name="pageModifySource" ColumnName="pageModifySource" />
+                <ScalarProperty Name="pageDataSource" ColumnName="pageDataSource" />
+                <ScalarProperty Name="pageTitle" ColumnName="pageTitle" />
+                <ScalarProperty Name="pageModifyURL" ColumnName="pageModifyURL" />
+                <ScalarProperty Name="pageQueryURL" ColumnName="pageQueryURL" />
+                <ScalarProperty Name="pageID" ColumnName="pageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="coreMenu">
+            <EntityTypeMapping TypeName="LayAdminModel.coreMenu">
+              <MappingFragment StoreEntitySet="coreMenu">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="ParentMenu" ColumnName="ParentMenu" />
+                <ScalarProperty Name="MenuCommand" ColumnName="MenuCommand" />
+                <ScalarProperty Name="MenuIcon" ColumnName="MenuIcon" />
+                <ScalarProperty Name="MenuHref" ColumnName="MenuHref" />
+                <ScalarProperty Name="MenuDesc" ColumnName="MenuDesc" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="coreDevPageQuery">
+            <EntityTypeMapping TypeName="LayAdminModel.coreDevPageQuery">
+              <MappingFragment StoreEntitySet="coreDevPageQuery">
+                <ScalarProperty Name="ANA_TAG" ColumnName="ANA_TAG" />
+                <ScalarProperty Name="ANA_SHOWOP" ColumnName="ANA_SHOWOP" />
+                <ScalarProperty Name="ANA_ISWHERE" ColumnName="ANA_ISWHERE" />
+                <ScalarProperty Name="ANA_ISMUSTFIELD" ColumnName="ANA_ISMUSTFIELD" />
+                <ScalarProperty Name="ANA_ENDDATA" ColumnName="ANA_ENDDATA" />
+                <ScalarProperty Name="ANA_BEGINDATA" ColumnName="ANA_BEGINDATA" />
+                <ScalarProperty Name="ANA_ISRANGE" ColumnName="ANA_ISRANGE" />
+                <ScalarProperty Name="ANA_LENGTH" ColumnName="ANA_LENGTH" />
+                <ScalarProperty Name="ANA_CONTROLTYPE" ColumnName="ANA_CONTROLTYPE" />
+                <ScalarProperty Name="ANA_SORT" ColumnName="ANA_SORT" />
+                <ScalarProperty Name="ANA_ACTIVE" ColumnName="ANA_ACTIVE" />
+                <ScalarProperty Name="ANA_DESC" ColumnName="ANA_DESC" />
+                <ScalarProperty Name="PAGE_FIELD" ColumnName="PAGE_FIELD" />
+                <ScalarProperty Name="PAGE_ID" ColumnName="PAGE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
