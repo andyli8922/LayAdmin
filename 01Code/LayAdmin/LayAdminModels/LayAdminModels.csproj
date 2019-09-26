@@ -60,10 +60,19 @@
     <Compile Include="coreMenu.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="coreRole.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="coreRoleMenu.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="coreToolBar.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="coreToolBarEvent.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="coreUser.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model.Context.cs">

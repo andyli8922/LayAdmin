@@ -1,0 +1,128 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>角色权限</title>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/lib/eleTree/eleTree.css" media="all">
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+    <form class="layui-form" style="margin-top:15px;margin-right:50px;">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">角色编号</label>
+                <div class="layui-input-inline">
+                    <select name="RoleID" id="RoleID" lay-filter="RoleID" lay-verify="required" lay-search>
+                        <option value="">请选择角色</option>
+                        @Html.Raw(ViewBag.Roles)
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-form-block">
+                <fieldset class="layui-elem-field site-demo-button">
+                    <legend>选择菜单</legend>
+                    <div class="eleTree RoleMenu" lay-filter="treeData"></div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="Save" lay-submit lay-filter="Save">保存</button>
+                <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+</form>
+    <script>
+        layui.config({
+            base: "/lib/layui/lay/mymodules/"
+        }).use(['form', 'jquery', 'eleTree', 'laydate'], function () {
+            var form = layui.form,
+                $ = layui.jquery,
+                eleTree = layui.eleTree,
+                laydate = layui.laydate;
+
+            var option = {
+                elem: ".RoleMenu",
+                emptText: "暂无数据",
+                //url: "/Home/GetJson?MenuID=1",
+                request: { //对于后台数据重新定义名字
+                    name: "MenuDesc",
+                    key: "id",
+                    children: "Children",
+                    checked: "isCheck",
+                    disabled: "disabled"
+                    // isLeaf: "isLeaf"
+                },
+                method: "post",
+                contentType: "json",
+                renderAfterExpand: false,    // 是否在第一次展开某个树节点后才渲染其子节点
+                highlightCurrent: true,    // 是否高亮当前选中节点，默认值是 false。
+                defaultExpandAll: true,    // 是否默认展开所有节点
+                expandOnClickNode: true,    // 是否在点击节点的时候展开或者收缩节点， 默认值为 true，如果为 false，则只有点箭头图标的时候才会展开或者收缩节点。
+                checkOnClickNode: false,    // 是否在点击节点的时候选中节点，默认值为 false，即只有在点击复选框时才会选中节点。
+                defaultExpandedKeys: [],    // 默认展开的节点的 key 的数组
+                autoExpandParent: true,     // 展开子节点的时候是否自动展开父节点
+                showCheckbox: true,        // 节点是否可被选择
+                checkStrictly: false,       // 在显示复选框的情况下，是否严格的遵循父子不互相关联的做法，默认为 false
+                defaultCheckedKeys: [],     // 默认勾选的节点的 key 的数组
+                accordion: false,           // 是否每次只打开一个同级树节点展开（手风琴效果）
+                indent: 16,                 // 相邻级节点间的水平缩进，单位为像素
+                lazy: false,                // 是否懒加载子节点，需与 load 方法结合使用
+                load: function () { },        // 加载子树数据的方法，仅当 lazy 属性为true 时生效
+                draggable: false,           // 是否开启拖拽节点功能
+                contextmenuList: [],        // 启用右键菜单，支持的操作有："copy","add","edit","remove"
+                searchNodeMethod: null,     // 对树节点进行筛选时执行的方法，返回 true 表示这个节点可以显示，返回 false 则表示这个节点会被隐藏
+            };
+
+            var el1 = eleTree.render({
+                elem: ".RoleMenu",
+                emptText: "暂无数据",
+            });
+
+            var RoleID = ""; //选中角色ID
+            form.on('select(RoleID)', function (data) {
+                //console.log(data.elem); //得到select原始DOM对象
+                //console.log(data.value); //得到被选中的值
+                //console.log(data.othis); //得到美化后的DOM对象
+                //console.log(el1.getChecked(false, true)); //得到树选中对象
+                RoleID = data.value;
+                option.url = "/Home/GetJson?RoleID=" + RoleID;
+                el1 = eleTree.render(option);
+            });
+            form.on('submit(Save)', function (data) {
+                console.log(el1.getChecked(false, true));
+                var checkMenus = el1.getChecked(false, true);
+                var checkID = new Array()
+                for (var i = 0; i < checkMenus.length; i++) {
+                    checkID[i] = checkMenus[i].id
+                }
+                console.log(checkID)
+                $.ajax({
+                        url: '/Home/SaveRole',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            RoleID: RoleID,
+                            Menus:checkID
+                        },
+                        success: function (data) {
+                            layer.alert(data.msg);
+                        },
+                        error: function (data) {
+                            layer.alert(data.msg);
+                        }
+                    });
+                return false;//阻止表单跳转。如果需要表单跳转，去掉这段即可
+            });
+        });
+    </script>
+</body>
+</html>

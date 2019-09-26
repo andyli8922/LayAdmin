@@ -1,0 +1,106 @@
+﻿
+@model LayAdminModels.coreDevPage
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.pageTitle</title>
+    <link rel="stylesheet" href="~/lib/layui/css/layui.css" media="all">
+    <script src="~/lib/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/LayAdmin.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    <div id="searchTable" style="display:none">
+        <form class="layui-form" action="">
+            @Html.Raw(Model.pageSearch)
+            <div class="layui-input-block" style="display:none">
+                <button class="layui-btn" id="formQuery" lay-submit lay-filter="formQuery">立即提交</button>
+                <button type="reset"  id="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </form>
+    </div>
+    <script type="text/html" id="toolbarList">
+        @Html.Raw(ViewBag.toolBar)
+    </script>
+    <script type="text/html" id="rowBar">
+        @Html.Raw(ViewBag.rowBar)
+    </script>
+    <table class="layui-hide" id="grid" lay-filter="grid"></table>
+    <script>
+        layui.use(['table', 'jquery', 'laydate'],
+        function() {
+        var table = layui.table,
+        $ = layui.jquery,
+        laydate = layui.laydate,
+        form=layui.form;
+        laydate.render({
+            elem: '.time' //指定元素
+        });
+        //监听提交
+        form.on('submit(formQuery)', function(data){
+            reload(JSON.stringify(data.field));
+            return false;
+        });
+        table.render({
+            elem: '#grid',
+            method:'post',
+            url: '@Model.pageQueryURL',
+            toolbar: '#toolbarList',
+            id: 'listReload', //生成 Layui table 的标识 id，必须提供，用于后文刷新操作
+            title:'@Model.pageTitle',
+            totalRow: @ViewBag.Total,
+            page: true, //开启分页
+            limit: @Html.Raw(Model.pageLimit), //每页条数，默认10条
+            limits: [@Html.Raw(Model.pageLimits)],
+            cols: [@Html.Raw(Model.pageColomns)]
+        });
+
+        var reload=function (data) {
+            layer.closeAll();
+            //执行重载
+            table.reload('listReload', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                },
+                url: '@Model.pageQueryURL',
+                where: {
+                    key:data
+                }
+            });
+        };
+
+        //头工具栏事件
+        table.on('toolbar(grid)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'Filter':
+                    layer.open({
+                        type: 1
+                      ,title:'查询条件'
+                      , offset: 'lt' //具体配置参考：offset参数项
+                      , content: $('#searchTable')
+                      , btn: ['查询', '重置']
+                      , btnAlign: 'r' //按钮居中
+                      , shade: [0.8, '#393D49'] //遮罩
+                      ,shadeClose: true //点击任意处关闭
+                      , yes: function (index, layero) {
+                          //重新加载
+                          $('#formQuery').click();
+                          //layer.close(index);
+                      },
+                        btn2:function (index, layero) {
+                            $('#reset').click();
+                            return false;
+                        }
+                    });
+                    break;
+                @Html.Raw(ViewBag.toolBarJS)
+            };
+        });
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+﻿@model LayAdminModels.coreDevPage
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.pageTitle</title>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/lib/eleTree/eleTree.css" media="all">
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+    <form class="layui-form" style="margin-top:15px;margin-right:50px;">
+        @Html.Raw(Model.pageEdit)
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="Save" lay-submit lay-filter="Save">保存</button>
+                <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+        <script>
+            layui.config({
+                base: "/lib/layui/lay/mymodules/"
+            }).use(['form', 'jquery', 'eleTree', 'laydate'], function () {
+                var form = layui.form,
+                    $ = layui.jquery,
+                    eleTree = layui.eleTree,
+                    laydate = layui.laydate;
+
+                form.on('submit(Save)', function (data) {
+                    $.ajax({
+                        url: '@Html.Raw(Model.pageModifyURL)',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            key: JSON.stringify(data.field)
+                        },
+                        success: function (data) {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            if (index != undefined) {
+                                layer.alert(data.msg,function(){
+                                    //关闭当前frame
+                                    parent.layer.close(index);
+                                    //修改成功后刷新父界面
+                                    window.parent.location.reload();
+                                });
+                            }
+                            else {
+                                layer.alert(data.msg);
+                            }
+                        },
+                        error: function (data) {
+                            layer.alert(data.msg);
+                        }
+                    });
+                    return false;//阻止表单跳转。如果需要表单跳转，去掉这段即可
+                });
+            });
+        </script>
+</body>
+</html>

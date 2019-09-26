@@ -14,20 +14,50 @@ namespace LayAdmin.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            string sessionID = (string)Session["CurrentSessionID"];
+            string roleID = Session["CurrentRole"].ToString();
             ViewBag.Title = "LayAdmin1.0";
             using (var db=new LayAdminEntities())
             {
-                List<coreMenu> menuList = db.coreMenu.Where<coreMenu>(r => 1 == 1).ToList();
+                List<string> RoleMenus = db.coreRoleMenu.Where<coreRoleMenu>(r => r.RoleID== roleID).Select<coreRoleMenu, string>(r => r.MenuID).ToList();
+                List<coreMenu> menuList = db.coreMenu.Where<coreMenu>(r => RoleMenus.Contains(r.MenuID)).ToList();
                 ViewBag.MenuStr = GetMenu(menuList, null);
                 return View();
             }
         }
-
-        public ActionResult Tree()
+        public ActionResult welcome()
         {
             return View();
         }
 
+        public ActionResult RoleMenu()
+        {
+            using (var db = new LayAdminEntities())
+            {
+                List<coreRole> roleList = db.coreRole.Where<coreRole>(r => 1 == 1).ToList();
+                string option = "";
+                foreach (coreRole item in roleList)
+                {
+                    option += string.Format("<option value = \"{0}\" > {1} </option >", item.RoleID, item.RoleDesc);
+                }
+                ViewBag.Roles = option;
+                return View();
+            }
+        }
+        
+        [HttpPost]
+        public string GetJson(string RoleID)
+        {
+            RoleMenu menus = new LayAdminCore.RoleMenu();
+            List<string> RoleIDs = new List<string>();
+            RoleIDs.Add(RoleID);
+            return menus.GetMenuJson(RoleIDs);
+        }
+        public string SaveRole(string RoleID,List<string> Menus)
+        {
+            RoleMenu Role = new LayAdminCore.RoleMenu();
+            return Role.SaveRole(RoleID, Menus);
+        }
         public string GetMenu(List<coreMenu> menuList,string MenuID)
         {
             StringBuilder MenuStr = new StringBuilder();
@@ -50,13 +80,6 @@ namespace LayAdmin.Controllers
                 {
                     MenuStr.Append("<a _href = '"+ item .MenuHref+ "'>");
                     MenuStr.Append("<i class='iconfont'>&#xe6a7;</i>");
-                    //if (string.IsNullOrEmpty(item.MenuIcon))
-                    //{
-                    //    MenuStr.Append("<i class='iconfont'>&#xe6a7;</i>");
-                    //}
-                    //else { 
-                    //    MenuStr.Append("<i class='iconfont'>" + item.MenuIcon + "</i>");
-                    //}
                     MenuStr.Append("<cite>"+ item.MenuDesc + "</cite>");
                     MenuStr.Append("</a>");
                 }

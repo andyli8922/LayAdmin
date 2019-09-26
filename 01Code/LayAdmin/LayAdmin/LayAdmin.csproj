@@ -143,18 +143,32 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\font.css" />
-    <Content Include="css\LayAdmin.css" />
+    <Content Include="css\login.css" />
+    <Content Include="css\theme1.css" />
+    <Content Include="css\theme2.css" />
+    <Content Include="css\theme3.css" />
+    <Content Include="css\theme4.css" />
+    <Content Include="css\theme5.css" />
+    <Content Include="css\xadmin.css" />
+    <Content Include="fonts\iconfont.eot" />
     <Content Include="fonts\iconfont.svg" />
+    <Content Include="fonts\iconfont.ttf" />
+    <Content Include="fonts\iconfont.woff" />
     <Content Include="Global.asax" />
     <Content Include="images\aiwrap.png" />
     <Content Include="images\bg.png" />
-    <Content Include="js\jquery-3.3.1.min.js" />
+    <Content Include="js\jquery.min.js" />
     <Content Include="js\LayAdmin.js" />
+    <Content Include="js\xadmin.js" />
     <Content Include="js\xcity.js" />
+    <Content Include="lib\eleTree\eleTree.css" />
+    <Content Include="lib\eleTree\index.html" />
+    <Content Include="lib\eleTree\README.md" />
+    <Content Include="lib\eleTree\test.html" />
+    <Content Include="lib\eleTree\tree.json" />
     <Content Include="lib\layui\css\layui.css" />
     <Content Include="lib\layui\css\layui.mobile.css" />
     <Content Include="lib\layui\css\modules\code.css" />
-    <Content Include="lib\layui\css\modules\laydate\default\font.css" />
     <Content Include="lib\layui\css\modules\laydate\default\laydate.css" />
     <Content Include="lib\layui\css\modules\layer\default\icon-ext.png" />
     <Content Include="lib\layui\css\modules\layer\default\icon.png" />
@@ -162,7 +176,10 @@
     <Content Include="lib\layui\css\modules\layer\default\loading-0.gif" />
     <Content Include="lib\layui\css\modules\layer\default\loading-1.gif" />
     <Content Include="lib\layui\css\modules\layer\default\loading-2.gif" />
+    <Content Include="lib\layui\font\iconfont.eot" />
     <Content Include="lib\layui\font\iconfont.svg" />
+    <Content Include="lib\layui\font\iconfont.ttf" />
+    <Content Include="lib\layui\font\iconfont.woff" />
     <Content Include="lib\layui\images\face\0.gif" />
     <Content Include="lib\layui\images\face\1.gif" />
     <Content Include="lib\layui\images\face\10.gif" />
@@ -235,10 +252,7 @@
     <Content Include="lib\layui\images\face\71.gif" />
     <Content Include="lib\layui\images\face\8.gif" />
     <Content Include="lib\layui\images\face\9.gif" />
-    <Content Include="lib\layui\layui.all.js" />
     <Content Include="lib\layui\layui.js" />
-    <Content Include="lib\layui\lay\all-mobile.js" />
-    <Content Include="lib\layui\lay\all.js" />
     <Content Include="lib\layui\lay\modules\carousel.js" />
     <Content Include="lib\layui\lay\modules\code.js" />
     <Content Include="lib\layui\lay\modules\colorpicker.js" />
@@ -252,24 +266,25 @@
     <Content Include="lib\layui\lay\modules\laypage.js" />
     <Content Include="lib\layui\lay\modules\laytpl.js" />
     <Content Include="lib\layui\lay\modules\mobile.js" />
-    <Content Include="lib\layui\lay\modules\mobile\layer-mobile.js" />
-    <Content Include="lib\layui\lay\modules\mobile\layim-mobile-open.js" />
-    <Content Include="lib\layui\lay\modules\mobile\upload-mobile.js" />
-    <Content Include="lib\layui\lay\modules\mobile\zepto.js" />
     <Content Include="lib\layui\lay\modules\rate.js" />
     <Content Include="lib\layui\lay\modules\slider.js" />
     <Content Include="lib\layui\lay\modules\table.js" />
     <Content Include="lib\layui\lay\modules\tree.js" />
     <Content Include="lib\layui\lay\modules\upload.js" />
     <Content Include="lib\layui\lay\modules\util.js" />
+    <Content Include="lib\layui\lay\mymodules\eleTree.js" />
     <Content Include="unicode.html" />
+    <Content Include="Views\Home\welcome.html" />
+    <Content Include="Views\Home\welcome1.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\PageObject\FieldPart.cshtml" />
     <Content Include="Views\PageObject\FieldPart1.cshtml" />
     <None Include="Properties\PublishProfiles\layAdmin.pubxml" />
-    <Content Include="Views\Home\Tree.cshtml" />
+    <Content Include="Views\Home\RoleMenu.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Home\welcome.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -291,7 +306,8 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MyController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MyControler.cs" />
     <Compile Include="Controllers\PageObjectController.cs" />
     <Compile Include="Controllers\SysSettingController.cs" />
     <Compile Include="Global.asax.cs">
@@ -306,12 +322,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="fonts\iconfont.eot" />
-    <Content Include="fonts\iconfont.ttf" />
-    <Content Include="fonts\iconfont.woff" />
-    <Content Include="lib\layui\font\iconfont.eot" />
-    <Content Include="lib\layui\font\iconfont.ttf" />
-    <Content Include="lib\layui\font\iconfont.woff" />
     <Content Include="Views\SysSetting\Roles.cshtml" />
     <Content Include="Views\PageObject\GridPart.cshtml" />
     <None Include="Web.Debug.config">

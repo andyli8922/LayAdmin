@@ -71,6 +71,29 @@
           <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifyDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="coreRole">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RoleDesc" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="coreRoleMenu">
+          <Key>
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="MenuID" />
+          </Key>
+          <Property Name="RoleID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MenuID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="coreToolBar">
           <Key>
             <PropertyRef Name="toolbarID" />
@@ -97,11 +120,29 @@
           <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifyDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="coreUser">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USER_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="USER_PASSWORD" Type="nvarchar" MaxLength="100" />
+          <Property Name="USER_ROLE" Type="nvarchar" MaxLength="50" />
+          <Property Name="USER_PHONE" Type="nvarchar" MaxLength="20" />
+          <Property Name="USER_ADDRESS" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
         <EntityContainer Name="LayAdminModelStoreContainer">
           <EntitySet Name="coreDevPage" EntityType="Self.coreDevPage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="coreMenu" EntityType="Self.coreMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="coreRole" EntityType="Self.coreRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="coreRoleMenu" EntityType="Self.coreRoleMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="coreToolBar" EntityType="Self.coreToolBar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="coreToolBarEvent" EntityType="Self.coreToolBarEvent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="coreUser" EntityType="Self.coreUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="coreDevPageQuery" EntityType="Self.coreDevPageQuery" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [coreDevPageQuery].[PAGE_ID] AS [PAGE_ID], 
@@ -131,6 +172,9 @@
           <EntitySet Name="coreDevPage" EntityType="LayAdminModel.coreDevPage" />
           <EntitySet Name="coreMenu" EntityType="LayAdminModel.coreMenu" />
           <EntitySet Name="coreDevPageQuery" EntityType="LayAdminModel.coreDevPageQuery" />
+          <EntitySet Name="coreRole" EntityType="LayAdminModel.coreRole" />
+          <EntitySet Name="coreRoleMenu" EntityType="LayAdminModel.coreRoleMenu" />
+          <EntitySet Name="coreUser" EntityType="LayAdminModel.coreUser" />
         </EntityContainer>
         <EntityType Name="coreToolBar">
           <Key>
@@ -221,6 +265,44 @@
           <Property Name="ANA_ISWHERE" Type="Int32" />
           <Property Name="ANA_SHOWOP" Type="Byte" />
           <Property Name="ANA_TAG" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="coreRole">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RoleDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="coreRoleMenu">
+          <Key>
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="MenuID" />
+          </Key>
+          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MenuID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="coreUser">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USER_PASSWORD" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="USER_ROLE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USER_PHONE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="USER_ADDRESS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -318,6 +400,46 @@
                 <ScalarProperty Name="ANA_DESC" ColumnName="ANA_DESC" />
                 <ScalarProperty Name="PAGE_FIELD" ColumnName="PAGE_FIELD" />
                 <ScalarProperty Name="PAGE_ID" ColumnName="PAGE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="coreRole">
+            <EntityTypeMapping TypeName="LayAdminModel.coreRole">
+              <MappingFragment StoreEntitySet="coreRole">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="RoleDesc" ColumnName="RoleDesc" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="coreRoleMenu">
+            <EntityTypeMapping TypeName="LayAdminModel.coreRoleMenu">
+              <MappingFragment StoreEntitySet="coreRoleMenu">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="coreUser">
+            <EntityTypeMapping TypeName="LayAdminModel.coreUser">
+              <MappingFragment StoreEntitySet="coreUser">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="USER_ADDRESS" ColumnName="USER_ADDRESS" />
+                <ScalarProperty Name="USER_PHONE" ColumnName="USER_PHONE" />
+                <ScalarProperty Name="USER_ROLE" ColumnName="USER_ROLE" />
+                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

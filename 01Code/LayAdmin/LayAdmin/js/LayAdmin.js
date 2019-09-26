@@ -2,7 +2,7 @@
 layui.use(['layer', 'jquery', 'form', 'element', 'laytpl'], function () {
     var layer = layui.layer,
         element = layui.element,
-        laytpl = layui.laytpl
+        laytpl = layui.laytpl,
         form = layui.form;
         $ = layui.jquery;
     //触发事件

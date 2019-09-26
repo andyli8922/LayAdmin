@@ -10,6 +10,9 @@
         <EntityTypeShape EntityType="LayAdminModel.coreDevPage" Width="1.5" PointX="0.75" PointY="0.875" />
         <EntityTypeShape EntityType="LayAdminModel.coreMenu" Width="1.5" PointX="6.625" PointY="0.75" />
         <EntityTypeShape EntityType="LayAdminModel.coreDevPageQuery" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="LayAdminModel.coreRole" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="LayAdminModel.coreRoleMenu" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="LayAdminModel.coreUser" Width="1.5" PointX="7.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

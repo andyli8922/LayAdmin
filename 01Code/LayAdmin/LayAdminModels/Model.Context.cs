@@ -7,26 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using LayAdminModels;
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-
-public partial class LayAdminEntities : DbContext
+namespace LayAdminModels
 {
-    public LayAdminEntities()
-        : base("name=LayAdminEntities")
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    
+    public partial class LayAdminEntities : DbContext
     {
+        public LayAdminEntities()
+            : base("name=LayAdminEntities")
+        {
+        }
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
+        public virtual DbSet<coreToolBar> coreToolBar { get; set; }
+        public virtual DbSet<coreToolBarEvent> coreToolBarEvent { get; set; }
+        public virtual DbSet<coreDevPage> coreDevPage { get; set; }
+        public virtual DbSet<coreMenu> coreMenu { get; set; }
+        public virtual DbSet<coreDevPageQuery> coreDevPageQuery { get; set; }
+        public virtual DbSet<coreRole> coreRole { get; set; }
+        public virtual DbSet<coreRoleMenu> coreRoleMenu { get; set; }
+        public virtual DbSet<coreUser> coreUser { get; set; }
     }
-
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-        throw new UnintentionalCodeFirstException();
-    }
-
-    public virtual DbSet<coreToolBar> coreToolBar { get; set; }
-    public virtual DbSet<coreToolBarEvent> coreToolBarEvent { get; set; }
-    public virtual DbSet<coreDevPage> coreDevPage { get; set; }
-    public virtual DbSet<coreMenu> coreMenu { get; set; }
-    public virtual DbSet<coreDevPageQuery> coreDevPageQuery { get; set; }
 }

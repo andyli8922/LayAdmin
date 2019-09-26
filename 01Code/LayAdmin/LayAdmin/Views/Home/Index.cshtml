@@ -15,7 +15,7 @@
 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/css/font.css">
-    <link rel="stylesheet" href="/css/LayAdmin.css">
+    <link rel="stylesheet" href="/css/xadmin.css">
 </head>
 <body>
     <!-- 顶部开始 -->
@@ -64,7 +64,7 @@
                 <li class="home"><i class="layui-icon">&#xe68e;</i>我的桌面</li>
             </ul>
             <!-- 当前页面操作 -->
-            <ul class="layui-nav closeBox">
+            @*<ul class="layui-nav closeBox">
                 <li class="layui-nav-item" pc>
                     <a href="javascript:;"><i class="iconfont1 icon-caozuo"></i> 页面操作</a>
                     <dl class="layui-nav-child">
@@ -73,11 +73,11 @@
                         <dd><a href="javascript:;" class="closePageAll"><i class="iconfont1 icon-guanbi"></i> 关闭全部</a></dd>
                     </dl>
                 </li>
-            </ul>
+            </ul>*@
 
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <iframe src='./welcome.html' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                    <iframe src='./welcome' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
                 </div>
             </div>
         </div>
@@ -100,8 +100,7 @@
       s.parentNode.insertBefore(hm, s);
     })();
     </script>
-
     <script type="text/javascript" src="/lib/layui/layui.js"></script>
-    <script type="text/javascript" src="~/js/LayAdmin.js"></script>
+    <script type="text/javascript" src="/js/LayAdmin.js"></script>
 </body>
 </html>

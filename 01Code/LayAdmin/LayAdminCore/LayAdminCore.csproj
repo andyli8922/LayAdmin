@@ -54,6 +54,7 @@
     <Compile Include="EntityBase.cs" />
     <Compile Include="GridManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleMenu.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="SQLHelper.cs" />
   </ItemGroup>
